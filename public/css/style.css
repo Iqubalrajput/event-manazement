@@ -1,0 +1,147 @@
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #fff;
+        margin: 0;
+        padding: 20px;
+    }
+
+
+    .form-section, .table-section {
+        padding: 40px 15px;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        margin-bottom: 20px;
+    }
+    .heading-top{
+        background-color: #000;
+        color: rgb(255, 255, 255);
+        display: block;
+        padding: 15px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+    .form-section{
+        box-shadow: -20px -18px 28px 13px #dee2e6!important;
+        border-radius: 5px;
+        border-color: #dee2e6;
+        border: 1px solid #dee2e6;
+    }
+    #savedEventData{
+        background: transparent!important;
+    }
+    h3{
+        font-size:15px!important;
+    }
+    h2 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-size: 14px;
+        color: #555;
+        display: block;
+        margin: 10px 0 5px;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .error {
+        color: red;
+        font-size: 12px;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    table th, table td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    table th {
+        background-color: #f1f1f1;
+        color: #333;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .delete-ticket, .edit-ticket {
+        background-color: #f44336;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .edit-ticket {
+        background-color: #4CAF50;
+    }
+
+    .delete-ticket:hover {
+        background-color: #d32f2f;
+    }
+
+    .edit-ticket:hover {
+        background-color: #45a049;
+    }
+    #alertMessage {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        display: none;
+        
+    }
+    .error {
+        color: red;
+        font-size: 12px;
+    }
+    .btn-info {
+        color: #fff;
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+        color: white;
+        padding: 6px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 12px;
+    }
+    .close:hover{
+        background-color:#f44336!important;
+        border-color:#f44336!important;
+    }
