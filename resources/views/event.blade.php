@@ -11,7 +11,7 @@
                     <h2 class="heading-top">Create Event</h2>
                     <div id="alertMessage"></div>
                     <label for="name">Event Name:</label>
-                    <input type="text" name="name" id="name" >
+                    <input type="text" name="name" id="name" required>
                     <div id="nameError" class="error"></div>
 
                     <label for="description">Event Description:</label>
@@ -19,15 +19,15 @@
                     <div id="descriptionError" class="error"></div>
 
                     <label for="start_date">Start Date:</label>
-                    <input type="date" name="start_date" id="start_date" >
+                    <input type="date" name="start_date" id="start_date" required>
                     <div id="start_dateError" class="error"></div>
 
                     <label for="end_date">End Date:</label>
-                    <input type="date" name="end_date" id="end_date" >
+                    <input type="date" name="end_date" id="end_date" required >
                     <div id="end_dateError" class="error"></div>
 
                     <label for="organizer">Organizer:</label>
-                    <input type="text" name="organizer" id="organizer" >
+                    <input type="text" name="organizer" id="organizer" required>
                     <div id="organizerError" class="error"></div>
 
                     <div class="table-container">
@@ -36,6 +36,7 @@
                         <table id="ticketTable">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Ticket No</th>
                                     <th>Price</th>
                                     <th>Actions</th>
@@ -71,6 +72,7 @@
                     <table class="table" id="ticketTableInModal">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Ticket No</th>
                                 <th>Price</th>
                             </tr>

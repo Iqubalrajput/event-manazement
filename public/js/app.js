@@ -23,13 +23,16 @@ window.viewTickets = function(eventId) {
                     </tr>
                 `;
             } else {
+                let ticketCount = 1;
                 data.forEach(function(ticket) {
                     ticketsHtml += `
                         <tr>
+                            <td>${ticketCount}</td>
                             <td>${ticket.ticketNo}</td>
                             <td>${ticket.price}</td>
                         </tr>
                     `;
+                    ticketCount++;
                 });
             }
             $('#ticketTableInModal tbody').html(ticketsHtml);
@@ -77,6 +80,7 @@ function fetchEventData() {
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Event Name</th>
                             <th>Description</th>
                             <th>Organizer</th>
@@ -91,6 +95,7 @@ function fetchEventData() {
                 var date = new Date(dateString);
                 return date.toLocaleDateString('en-GB', options); // Format to "11 November 2024"
             }
+            let eventCount = 1;
             data.forEach(function(event) {
                 var tickets = ''; 
                 event.tickets.forEach(function(ticket) {
@@ -99,6 +104,7 @@ function fetchEventData() {
 
                 eventData += `
                     <tr>
+                        <td>${eventCount}</td>
                         <td>${event.name||'NA'}</td>
                         <td>${event.description || 'NA'}</td>
                         <td>${event.organizer || 'NA'}</td>
@@ -106,8 +112,10 @@ function fetchEventData() {
                         <td>${formatDate(event.end_date)}</td>
                         <td><button class="btn btn-info" onclick="viewTickets(${event.id})">Tickets</button></td>
                     </tr>
+                    
                     ${tickets}
                 `;
+                eventCount++;
             });
 
             eventData += `
@@ -128,10 +136,12 @@ function fetchEventData() {
 
 // Add a new ticket row
 $('#addTicket').click(function() {
+    var rowCount = $('#ticketTable tbody tr').length;
 const row = `
     <tr>
-        <td><input type="text" class="ticket-no" ></td>
-        <td><input type="number" class="ticket-price" ></td>
+        <td class="ticket-index">${rowCount + 1}</td>
+        <td><input type="text" class="ticket-no" required></td>
+        <td><input type="number" class="ticket-price" required></td>
         <td>
             <button type="button" class="edit-ticket">Edit</button>
             <button type="button" class="delete-ticket">Delete</button>
