@@ -29,6 +29,7 @@
     }
     #savedEventData{
         background: transparent!important;
+        overflow-y: auto;
     }
     h3{
         font-size:15px!important;
@@ -63,11 +64,10 @@
     button {
         background-color: #4CAF50;
         color: white;
-        padding: 10px;
+        padding: 5px 10px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        font-size: 14px;
         margin-top: 10px;
     }
 
@@ -104,6 +104,14 @@
         border-radius: 5px;
         cursor: pointer;
     }
+    .delete-event{
+        background-color: #f44336;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
     .edit-ticket {
         background-color: #4CAF50;
@@ -117,6 +125,17 @@
         background-color: #45a049;
     }
     #alertMessage {
+        padding: 15px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        display: none;
+        
+    }
+    #alertMessagelist {
         padding: 15px;
         margin-bottom: 20px;
         border-radius: 5px;

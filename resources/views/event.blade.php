@@ -9,7 +9,6 @@
                 <form id="eventForm">
                     @csrf
                     <h2 class="heading-top">Create Event</h2>
-                    <div id="alertMessage"></div>
                     <label for="name">Event Name:</label>
                     <input type="text" name="name" id="name" required>
                     <div id="nameError" class="error"></div>
@@ -45,19 +44,49 @@
                             <tbody></tbody>
                         </table>
                     </div>
-
                     <button type="submit">Save Event</button>
+                    <div id="alertMessage"></div>
                 </form>
             </div>
-
-            <!-- Event Data Section -->
-            <div class="col-12 col-lg-7 table-section" id="savedEventData">
-                <!-- Event data will be displayed here after successful form submission -->
+            <div class="col-12 col-lg-7 table-section">
+                <div id="savedEventData"></div>
+                <div id="alertMessagelist"></div>
             </div>
         </div>
     </div>
+    <!-- Edit Modal -->
+    <div id="editModal" style="display: none; position: fixed; top: 20%; left: 50%; transform: translate(-50%, -20%); width: 400px; background: white; padding: 20px; border: 1px solid #ccc; border-radius: 5px; z-index: 1000;">
+        <h3>Edit Event</h3>
+        <form id="editForm">
+            <input type="hidden" id="editEventId">
+            <div>
+                <label for="editEventName">Event Name:</label>
+                <input type="text" id="editEventName" required>
+            </div>
+            <div>
+                <label for="editEventDescription">Description:</label>
+                <textarea  id="editEventDescription" ></textarea>
+            </div>
+            <div>
+                <label for="editEventOrganizer">Organizer:</label>
+                <input type="text" id="editEventOrganizer" required>
+            </div>
+            <div>
+                <label for="editEventStartDate">Start Date:</label>
+                <input type="date" id="editEventStartDate" required>
+            </div>
+            <div>
+                <label for="editEventEndDate">End Date:</label>
+                <input type="date" id="editEventEndDate" required>
+            </div>
+            <button type="button" class="edit-event"onclick="update_event()">Update Event</button>
+            <button type="button" class="delete-event" onclick="closeModal()">Cancel</button>
+        </form>
+    </div>
 
-    <!-- Modal for Viewing Tickets -->
+    <!-- Overlay (Optional) -->
+    <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999;"></div>
+
     <div class="modal fade" id="ticketModal" tabindex="-1" role="dialog" aria-labelledby="ticketModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

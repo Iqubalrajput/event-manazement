@@ -57,17 +57,19 @@ function fetchEventData() {
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Event Name</th>
                             <th>Description</th>
                             <th>Organizer</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Tickets</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td colspan="6" style="text-align:center;">No events available</td>
+                            <td colspan="10" style="text-align:center;">No events available</td>
                         </tr>
                     </tbody>
                 </table>
@@ -81,12 +83,13 @@ function fetchEventData() {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Event Name</th>
+                            <th>Event</th>
                             <th>Description</th>
                             <th>Organizer</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Tickets</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -111,6 +114,10 @@ function fetchEventData() {
                         <td>${formatDate(event.start_date)}</td>
                         <td>${formatDate(event.end_date)}</td>
                         <td><button class="btn btn-info" onclick="viewTickets(${event.id})">Tickets</button></td>
+                        <td>
+                          <button type="button" class="edit-event" onclick="editEvent(${event.id})">Edit</button>
+                            <button type="button" class="delete-event" onclick="deleteEvent(this, ${event.id})">Delete</button>
+                        </td>
                     </tr>
                     
                     ${tickets}
@@ -122,8 +129,6 @@ function fetchEventData() {
                     </tbody>
                 </table>
             `;
-
-            // Insert the event data into the table-section div
             $('#savedEventData').html(eventData);
         },
         error: function(xhr, status, error) {
@@ -133,8 +138,86 @@ function fetchEventData() {
     });
 }
 
+function editEvent(eventId) {
+    // Make an AJAX call to fetch the event data
+    fetch(`/events/${eventId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch event data');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate modal fields with fetched data
+            document.getElementById('editEventId').value = data.id;
+            document.getElementById('editEventName').value = data.name;
+            document.getElementById('editEventDescription').value = data.description;
+            document.getElementById('editEventOrganizer').value = data.organizer;
+            document.getElementById('editEventStartDate').value = data.start_date;
+            document.getElementById('editEventEndDate').value = data.end_date;
 
-// Add a new ticket row
+            // Show the modal
+            document.getElementById('editModal').style.display = 'block';
+            document.getElementById('modalOverlay').style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error fetching event data:', error);
+            alert('An error occurred while fetching event data. Please try again.');
+        });
+}
+
+
+function closeModal() {
+    document.getElementById('editModal').style.display = 'none';
+    document.getElementById('modalOverlay').style.display = 'none';
+}
+
+function update_event() {
+    // Get updated data from modal
+    const eventId = document.getElementById('editEventId').value;
+    const eventName = document.getElementById('editEventName').value;
+    const eventDescription = document.getElementById('editEventDescription').value;
+    const eventOrganizer = document.getElementById('editEventOrganizer').value;
+    const eventStartDate = document.getElementById('editEventStartDate').value;
+    const eventEndDate = document.getElementById('editEventEndDate').value;
+
+    // AJAX request to update data in the database
+    $.ajax({
+        url: `/events/${eventId}`,
+        type: 'PUT',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            name: eventName,
+            description: eventDescription,
+            organizer: eventOrganizer,
+            start_date: eventStartDate,
+            end_date: eventEndDate
+        },
+        success: function (response) {
+            closeModal();
+            $('#alertMessagelist').text(response.message).css('background-color', '#4CAF50').css('color', '#fff').css('padding', '15px').show();
+                fetchEventData(); 
+                setTimeout(function() {
+                    $('#alertMessagelist').fadeOut(); 
+                }, 3000);
+        },
+        error: function (xhr) {
+            alert(xhr.responseJSON.message || 'An error occurred.');
+        }
+    });
+}
+function openModal() {
+    document.getElementById('editModal').style.display = 'block';
+    document.getElementById('modalOverlay').style.display = 'block';
+}
+function closeModal() {
+    document.getElementById('editModal').style.display = 'none';
+    document.getElementById('modalOverlay').style.display = 'none';
+}
+
+
 $('#addTicket').click(function() {
     var rowCount = $('#ticketTable tbody tr').length;
 const row = `
@@ -150,7 +233,29 @@ const row = `
 $('#ticketTable tbody').append(row);
 });
 
-// Edit ticket
+function deleteEvent(button, eventId) {
+    if (confirm("Are you sure you want to delete this event?")) {
+        // AJAX request to delete the event
+        $.ajax({
+            url: `/events/${eventId}`, // Laravel API endpoint
+            type: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token
+            },
+            success: function (response) {
+                $('#alertMessagelist').text(response.message).css('background-color', '#f44336').css('color', '#fff').css('padding', '15px').show();
+                fetchEventData(); 
+                setTimeout(function() {
+                    $('#alertMessagelist').fadeOut(); 
+                }, 2000);
+            },
+            error: function (xhr) {
+                alert(xhr.responseJSON.message || 'An error occurred.');
+            }
+        });
+    }
+}
+
 $(document).on('click', '.edit-ticket', function() {
 const row = $(this).closest('tr');
 const ticketNo = row.find('.ticket-no').val();

@@ -22,3 +22,6 @@ Route::get('/', [EventController::class, 'index']);
 Route::get('/events', [EventController::class, 'getAllEvents']);
 Route::get('/events/{event}/tickets', [EventController::class, 'getTickets']);
 Route::post('/save-event', [EventController::class, 'store']);
+Route::get('/events/{id}', [EventController::class, 'show']);
+Route::put('/events/{id}', [EventController::class, 'update']);
+Route::delete('/events/{id}', [EventController::class, 'destroy']);

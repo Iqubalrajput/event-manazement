@@ -81,4 +81,54 @@ class EventController extends Controller
             ], 500);
         }
     }
+    public function update(Request $request, $id)
+    {
+        try {
+            $event = Event::find($id);
+            if (!$event) {
+                return response()->json(['message' => 'Event not found'], 404);
+            }
+            $event->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'organizer' => $request->organizer,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+            ]);
+
+            return response()->json(['message' => 'Event updated successfully'], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while updating the event',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function show($id)
+    {
+        try {
+            $event = Event::find($id);
+            if (!$event) {
+                return response()->json(['message' => 'Event not found'], 404);
+            }
+            return response()->json($event, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Server error', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    public function destroy($id)
+    {
+        $event = Event::find($id);
+        if (!$event) {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
+
+        $event->delete();
+
+        return response()->json(['message' => 'Event deleted successfully'], 200);
+    }
+
 }
